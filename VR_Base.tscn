@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://chrxf8egnesc5"]
+[gd_scene load_steps=9 format=3 uid="uid://chrxf8egnesc5"]
 
 [ext_resource type="PackedScene" uid="uid://bq86r4yll8po" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_fullglove_low.tscn" id="1_b5v62"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="1_qq24q"]
@@ -9,6 +9,15 @@ size = Vector2(10, 10)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pr4ux"]
 size = Vector3(10, 1, 10)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_du5xn"]
+
+[sub_resource type="Sky" id="Sky_3bqjq"]
+sky_material = SubResource("ProceduralSkyMaterial_du5xn")
+
+[sub_resource type="Environment" id="Environment_ebx01"]
+background_mode = 2
+sky = SubResource("Sky_3bqjq")
 
 [node name="Node3D" type="Node3D"]
 
@@ -38,3 +47,9 @@ mesh = SubResource("PlaneMesh_23m37")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_pr4ux")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ebx01")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.896911, 0.44221, 0, -0.44221, 0.896911, 0, 1.7772, 0)
