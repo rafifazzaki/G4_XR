@@ -1,10 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://chrxf8egnesc5"]
+[gd_scene load_steps=14 format=3 uid="uid://chrxf8egnesc5"]
 
 [ext_resource type="PackedScene" uid="uid://bq86r4yll8po" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_fullglove_low.tscn" id="1_b5v62"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="1_qq24q"]
 [ext_resource type="PackedScene" uid="uid://xqimcf20s2jp" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_fullglove_low.tscn" id="2_sypqw"]
 [ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="3_d1sxn"]
 [ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="5_5ualu"]
+[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="6_6b3eg"]
+[ext_resource type="Script" path="res://addons/godot-xr-tools/player/player_body.gd" id="7_mcskj"]
 
 [sub_resource type="GDScript" id="GDScript_yhfd6"]
 script/source = "@tool
@@ -118,8 +120,10 @@ sky = SubResource("Sky_3bqjq")
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.5)
 tracker = &"left_hand"
 pose = &"aim"
 
@@ -128,6 +132,7 @@ pose = &"aim"
 [node name="MovementDirect" parent="XROrigin3D/LeftController" instance=ExtResource("3_d1sxn")]
 
 [node name="RightController" type="XRController3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.5)
 tracker = &"right_hand"
 pose = &"aim"
 script = SubResource("GDScript_yhfd6")
@@ -137,6 +142,14 @@ script = SubResource("GDScript_yhfd6")
 [node name="MovementDirect" parent="XROrigin3D/RightController" instance=ExtResource("3_d1sxn")]
 
 [node name="MovementTurn" parent="XROrigin3D/RightController" instance=ExtResource("5_5ualu")]
+
+[node name="PlayerBody" type="CharacterBody3D" parent="XROrigin3D" groups=["player_body"] instance=ExtResource("6_6b3eg")]
+process_priority = -100
+process_physics_priority = -100
+top_level = true
+collision_layer = 524288
+collision_mask = 1023
+script = ExtResource("7_mcskj")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
